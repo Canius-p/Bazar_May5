@@ -8,9 +8,10 @@ const app = (0, express_1.default)();
 require("dotenv").config({ path: "../.env" });
 const PORT = process.env.PORT || 8080;
 const HOSTNAME = process.env.HOSTNAME;
+require("./model/database.model");
 app.get("/", (req, res) => {
     res.send("Im alive");
 });
 app.listen(PORT, () => {
-    console.log(`Sever is running on ${HOSTNAME}:${PORT}`);
+    console.log(`Sever is running on http://${HOSTNAME}:${PORT}`);
 });

@@ -2,5 +2,5 @@
   "watch": ["src"],
   "ext": "ts,json",
   "ignore": ["src/**/*.spec.ts"],
-  "exec": "ts-node --files --require tsconfig-paths/register src/app.ts"
+  "exec": "npx ts-node --files --require tsconfig-paths/register ./src/app.ts"
 }

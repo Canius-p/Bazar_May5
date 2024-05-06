@@ -26,3 +26,12 @@ sequelize
   .catch((err) => {
     console.log("Erro roocured: " + err);
   });
+const database: any = {};
+database.Sequelize = Sequelize;
+database.sequelize = sequelize;
+
+database.sequelize.sync({ force: false }).then(() => {
+  console.log("data migrated succesfully");
+});
+
+export default database;
