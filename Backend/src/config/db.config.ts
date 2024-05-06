@@ -25,3 +25,5 @@ const dbConfig: Database = {
     acqurie: 1000,
   },
 };
+
+export default dbConfig;
