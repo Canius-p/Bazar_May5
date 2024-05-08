@@ -15,7 +15,7 @@ app.get('/', (req: Request, res: Response) => {
   res.send('Im alive');
 });
 
-app.use('api', userRoute);
+app.use('/api', userRoute);
 
 app.listen(PORT, () => {
   console.log(`Sever is running on http://${HOSTNAME}:${PORT}`);
