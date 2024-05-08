@@ -7,7 +7,7 @@ const sequelize = new Sequelize({
   password: process.env.DB_PASSWORD,
   host: process.env.DB_HOST,
   port: Number(process.env.DB_PORT),
-  models: [__dirname + './models'],
+  models: [__dirname + '/models'],
 });
 
 sequelize
@@ -19,7 +19,7 @@ sequelize
     console.log('Error occured: ' + err);
   });
 sequelize.sync({ force: false }).then(() => {
-  console.log('data migrated succesfully');
+  console.log('data synced succesfully');
 });
 
 export default sequelize;

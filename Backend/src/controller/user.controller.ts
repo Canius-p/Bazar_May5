@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
 import User from '../database/models/user.model';
 
-class authController {
-  async registerUser(req: Request, res: Response): Promise<void> {
+class AuthController {
+  public static async registerUser(req: Request, res: Response): Promise<void> {
     const { username, email, password } = req.body;
     if (!username || !password || !email) {
       res.status(400).json({
@@ -22,6 +22,5 @@ class authController {
     return;
   }
 }
-const AuthController = new authController();
 
 export default AuthController;
