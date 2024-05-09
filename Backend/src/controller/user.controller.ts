@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import User from '../database/models/user.model';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+
 class AuthController {
   public static async registerUser(req: Request, res: Response): Promise<void> {
     const { username, email, password } = req.body;
@@ -28,7 +29,6 @@ class AuthController {
     res.status(200).json({
       message: 'User registed successfully',
     });
-    return;
   }
 
   public static async loginuser(req: Request, res: Response): Promise<void> {

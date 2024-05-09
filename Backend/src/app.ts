@@ -9,8 +9,11 @@ const HOSTNAME = process.env.HOSTNAME;
 
 import './database/db.connection';
 import userRoute from './routes/user.route';
+import adminSeeder from './admin.seeder';
 
 app.use(express.json());
+
+adminSeeder();
 app.get('/', (req: Request, res: Response) => {
   res.send('Im alive');
 });
