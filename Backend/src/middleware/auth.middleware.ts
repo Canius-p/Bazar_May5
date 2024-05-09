@@ -11,7 +11,7 @@ interface authRequest extends Request {
     id: string;
   };
 }
-enum Role {
+export enum Role {
   Admin = 'admin',
   Customer = 'customer',
 }
@@ -32,7 +32,7 @@ class AuthMiddleware {
     //verify token orginality
     jwt.verify(
       token,
-      process.env.JWT_SECRET_KEY as string,
+      (process.env.JWTSECERTKEY as string) || 'hehehe',
       async (err, decoded: any) => {
         if (err) {
           res.status(403).json({
