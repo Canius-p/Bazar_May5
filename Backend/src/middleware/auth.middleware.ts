@@ -32,7 +32,7 @@ class AuthMiddleware {
     //verify token orginality
     jwt.verify(
       token,
-      (process.env.JWTSECERTKEY as string) || 'hehehe',
+     'hehehe',
       async (err, decoded: any) => {
         if (err) {
           res.status(403).json({

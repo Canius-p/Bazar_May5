@@ -54,13 +54,9 @@ class AuthController {
 
     const isMatched = bcrypt.compareSync(password, data.password);
     if (isMatched) {
-      const token = jwt.sign(
-        { id: data.id },
-        process.env.JWT_SECRT_KEY as string,
-        {
-          expiresIn: '10d',
-        }
-      );
+      const token = jwt.sign({ id: data.id }, 'hehehe', {
+        expiresIn: '10d',
+      });
 
       res.status(200).json({
         message: 'Logged in successfully',

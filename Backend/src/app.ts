@@ -21,7 +21,7 @@ app.get('/', (req: Request, res: Response) => {
 });
 
 app.use('/api', userRoute);
-app.use('/api/product', productRoute);
+app.use('/api/admin/product', productRoute);
 
 app.listen(PORT, () => {
   console.log(`Sever is running on http://${HOSTNAME}:${PORT}`);
