@@ -12,6 +12,7 @@ router
     authMiddleware.restrictTo(Role.Admin),
     upload.single('image'),
     productController.addProduct
-  );
+  )
+  .get(productController.getAllProduct);
 
 export default router;
