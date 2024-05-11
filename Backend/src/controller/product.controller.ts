@@ -1,13 +1,16 @@
 import { Request, Response } from 'express';
 import Product from '../database/models/product.model';
+import { authRequest } from '../middleware/auth.middleware';
 class productController {
-  async addProduct(req: Request, res: Response): Promise<void> {
+  async addProduct(req: authRequest, res: Response): Promise<void> {
+    const userId = req.user?.id;
     const {
       productName,
       productDescription,
       productPrice,
       productStatus,
       productStockQuantity,
+      categoryId,
     } = req.body;
     let filename;
     if (req.file) {
@@ -21,7 +24,8 @@ class productController {
       !productName ||
       !productDescription ||
       !productStockQuantity ||
-      !productPrice
+      !productPrice ||
+      !categoryId
     ) {
       res.status(400).json({
         message: 'Please provide all the details',
@@ -34,8 +38,9 @@ class productController {
       productDescription,
       productPrice,
       productStockQuantity,
-      productStatus,
       image: filename,
+      userId: userId,
+      categoryId: categoryId,
     });
     res.status(200).json({
       message: 'Product added successfully',

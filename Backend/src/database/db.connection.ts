@@ -1,4 +1,7 @@
 import { Sequelize } from 'sequelize-typescript';
+import Product from './models/product.model';
+import User from './models/user.model';
+import Category from './models/category.model';
 
 const sequelize = new Sequelize({
   database: process.env.DB_NAME,
@@ -23,4 +26,12 @@ sequelize.sync({ force: false }).then(() => {
   console.log('data synced succesfully');
 });
 
+//relation
+User.hasMany(Product, { foreignKey: 'userId' });
+//custom foreign coln User.hasMany(Product:foreign key : "newcoln");
+Product.belongsTo(User, { foreignKey: 'userId' });
+
+Category.hasOne(Product, { foreignKey: 'categoryId' });
+Product.belongsTo(Category, { foreignKey: 'categoryId' });
+// Product.belongsTo();
 export default sequelize;

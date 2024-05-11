@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import User from '../database/models/user.model';
 
-interface authRequest extends Request {
+export interface authRequest extends Request {
   user?: {
     username: string;
     email: string;
@@ -30,34 +30,30 @@ class AuthMiddleware {
       return;
     }
     //verify token orginality
-    jwt.verify(
-      token,
-     'hehehe',
-      async (err, decoded: any) => {
-        if (err) {
-          res.status(403).json({
-            message: 'Invalid token',
-          });
-        } else {
-          //verifying the docoded jwt has id or not
-          try {
-            const userData = await User.findByPk(decoded.id);
-            if (!userData) {
-              res.status(404).json({
-                message: 'User with that token exists',
-              });
-              return;
-            }
-            req.user = userData;
-            next();
-          } catch (error) {
-            res.status(500).json({
-              message: 'Something Went wrong',
+    jwt.verify(token, 'hehehe', async (err, decoded: any) => {
+      if (err) {
+        res.status(403).json({
+          message: 'Invalid token',
+        });
+      } else {
+        //verifying the docoded jwt has id or not
+        try {
+          const userData = await User.findByPk(decoded.id);
+          if (!userData) {
+            res.status(404).json({
+              message: 'User with that token exists',
             });
+            return;
           }
+          req.user = userData;
+          next();
+        } catch (error) {
+          res.status(500).json({
+            message: 'Something Went wrong',
+          });
         }
       }
-    );
+    });
   }
 
   restrictTo(...roles: Role[]) {

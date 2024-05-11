@@ -13,6 +13,7 @@ import adminSeeder from './admin.seeder';
 
 import userRoute from './routes/user.route';
 import productRoute from './routes/product.route';
+import categoryController from './controller/category.controller';
 app.use(express.json());
 
 adminSeeder();
@@ -24,5 +25,6 @@ app.use('/api', userRoute);
 app.use('/api/admin/product', productRoute);
 
 app.listen(PORT, () => {
+  categoryController.seedCategory();
   console.log(`Sever is running on http://${HOSTNAME}:${PORT}`);
 });

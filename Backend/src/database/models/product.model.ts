@@ -31,7 +31,7 @@ class Product extends Model {
   @Column({
     type: DataType.INTEGER,
   })
-  declare prdouctStockQuantity: number;
+  declare productStockQuantity: number;
 
   @Column({
     type: DataType.ENUM('available', 'unavailable'),
