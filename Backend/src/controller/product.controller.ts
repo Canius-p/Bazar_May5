@@ -66,6 +66,59 @@ class productController {
       data,
     });
   }
+
+  async getSingleProduct(req: Request, res: Response): Promise<void> {
+    const id = req.params.id;
+    const data = await Product.findAll({
+      where: {
+        id: id,
+      },
+      include: [
+        {
+          model: User,
+          attributes: ['id', 'email', 'username'],
+        },
+        {
+          model: Category,
+          attributes: ['categoryName'],
+        },
+      ],
+    });
+    if (data.length == 0) {
+      res.status(404).json({
+        message: 'The product doesnt exist with id',
+      });
+    } else {
+      res.status(200).json({
+        message: 'Product fetched successfully',
+        data,
+      });
+    }
+  }
+  async deleteProduct(req: Request, res: Response): Promise<void> {
+    const { id } = req.params;
+    const data = await Product.findAll({
+      where: {
+        id: id,
+      },
+    });
+
+    Product.destroy({
+      where: {
+        id: id,
+      },
+    });
+    if (data.length > 0) {
+      res.status(404).json({
+        message: 'The product doesnt exist with id',
+      });
+    } else {
+      res.status(200).json({
+        message: 'Product deleted successfully',
+        data,
+      });
+    }
+  }
 }
 
 export default new productController();
