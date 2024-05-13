@@ -10,10 +10,11 @@ const HOSTNAME = process.env.HOSTNAME;
 import './database/db.connection';
 
 import adminSeeder from './admin.seeder';
+import categoryController from './controller/category.controller';
 
 import userRoute from './routes/user.route';
 import productRoute from './routes/product.route';
-import categoryController from './controller/category.controller';
+import categoryRoute from './routes/category.route';
 app.use(express.json());
 
 adminSeeder();
@@ -23,7 +24,7 @@ app.get('/', (req: Request, res: Response) => {
 
 app.use('/api', userRoute);
 app.use('/api/admin/product', productRoute);
-
+app.use('/api/admin', categoryRoute);
 app.listen(PORT, () => {
   categoryController.seedCategory();
   console.log(`Sever is running on http://${HOSTNAME}:${PORT}`);
