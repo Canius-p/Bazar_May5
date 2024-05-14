@@ -42,7 +42,7 @@ class categoryController {
     });
   }
   async getCategories(req: Request, res: Response) {
-    const data = Category.findAll();
+    const data = await Category.findAll();
     res.status(200).json({
       message: 'Categories fetched',
       data,
@@ -92,7 +92,7 @@ class categoryController {
         }
       );
       res.status(200).json({
-        message: 'Category deleted successfylly',
+        message: 'Category updated successfylly',
       });
     }
   }

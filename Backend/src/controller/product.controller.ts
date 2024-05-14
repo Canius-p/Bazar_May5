@@ -3,6 +3,8 @@ import Product from '../database/models/product.model';
 import { authRequest } from '../middleware/auth.middleware';
 import User from '../database/models/user.model';
 import Category from '../database/models/category.model';
+import fs from 'fs';
+
 class productController {
   async addProduct(req: authRequest, res: Response): Promise<void> {
     const userId = req.user?.id;
@@ -118,6 +120,83 @@ class productController {
         data,
       });
     }
+  }
+
+  async updateProduct(req: Request, res: Response) {
+    const { id } = req.params;
+    const {
+      productName,
+      productDescription,
+      productPrice,
+      productStatus,
+      productStockQuantity,
+      categoryId,
+    } = req.body;
+
+    if (
+      !productName ||
+      !productDescription ||
+      !productStockQuantity ||
+      !productPrice ||
+      !categoryId
+    ) {
+      res.status(400).json({
+        message: 'Please provide all the details',
+      });
+      return;
+    }
+    const oldData = await Product.findAll({
+      where: {
+        id: id,
+      },
+      include: [
+        {
+          model: User,
+          attributes: ['id', 'email', 'username'],
+        },
+        {
+          model: Category,
+          attributes: ['categoryName'],
+        },
+      ],
+    });
+
+    const oldProductImage = oldData;
+    const lengthToCut = String(process.env.BACKEND_URL);
+    const finalFilePath = oldProductImage.slice(lengthToCut);
+    if (req.file && req.file?.fieldname) {
+      fs.unlink('./uploads/' + finalFilePath, err => {
+        if (err) {
+          console.log('error deleting file', err);
+        } else {
+          console.log('file deleted successfully');
+        }
+      });
+    }
+
+    const data = await Product.update(
+      {
+        productName,
+        productDescription,
+        productPrice,
+        productStatus,
+        productStockQuantity,
+        categoryId,
+        image:
+          req.file && req.file?.filename
+            ? process.env.BACKEND_URL + req.file.filename
+            : oldData,
+      },
+      {
+        where: {
+          id: id,
+        },
+      }
+    );
+    res.status(200).json({
+      message: 'Product update successfully',
+      data: data,
+    });
   }
 }
 
