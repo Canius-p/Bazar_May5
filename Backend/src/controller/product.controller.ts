@@ -42,7 +42,7 @@ class productController {
       productDescription,
       productPrice,
       productStockQuantity,
-      image: filename,
+      image: process.env.BACKEND_URL + filename,
       userId: userId,
       categoryId: categoryId,
     });
@@ -145,7 +145,7 @@ class productController {
       });
       return;
     }
-    const oldData = await Product.findAll({
+    const oldData: Product[] = await Product.findAll({
       where: {
         id: id,
       },
@@ -161,7 +161,7 @@ class productController {
       ],
     });
 
-    const oldProductImage = oldData;
+    const oldProductImage = (oldData as any).image;
     const lengthToCut = String(process.env.BACKEND_URL);
     const finalFilePath = oldProductImage.slice(lengthToCut);
     if (req.file && req.file?.fieldname) {
