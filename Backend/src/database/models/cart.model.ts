@@ -1,11 +1,4 @@
-import {
-  Table,
-  Column,
-  Model,
-  DataType,
-  PrimaryKey,
-  AllowNull,
-} from 'sequelize-typescript';
+import { Table, Column, Model, DataType } from 'sequelize-typescript';
 
 @Table({
   tableName: 'carts',
@@ -18,11 +11,12 @@ class Cart extends Model {
     type: DataType.UUID,
     defaultValue: DataType.UUIDV4,
   })
-  declare id: string;
+  declare productId: string;
 
   @Column({
-    type: DataType.STRING,
-    AllowNull: false,
+    type: DataType.INTEGER,
+    allowNull: false,
   })
-  declare categoryName: string;
+  declare quantity: number;
 }
+export default Cart;
