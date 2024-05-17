@@ -12,15 +12,27 @@ class cartController {
         message: 'Please provide data',
       });
     }
-    let cartItems = await Cart.findOne({
+    //checking for the existing cart items
+    let cartItem = await Cart.findOne({
       where: {
         userId,
         productId,
       },
     });
-    if (cartItems) {
-      cartItems.quantity = quantity;
-      await cartItems.save();
+    if (cartItem) {
+      cartItem.quantity += quantity;
+      await cartItem.save();
+    } else {
+      cartItem = await Cart.create({
+        quantity,
+        userId,
+        productId,
+      });
     }
+    res.status(200).json({
+      message: 'Product added to cart',
+      data: cartItem,
+    });
   }
 }
+export default new cartController();
