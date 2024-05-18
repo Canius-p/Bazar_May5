@@ -65,7 +65,37 @@ class cartController {
     }
   }
 
-  async deleteCart(req: Request, res: Response): Promise<void> {}
-  async udateCart(req: Request, res: Response): Promise<void> {}
+  async deleteCart(req: authRequest, res: Response): Promise<void> {
+    const userId = req.user?.id;
+    const { productId } = req.params;
+    const product = await Product.findByPk(productId);
+    if (!product) {
+      res.status(404).json({
+        message: 'Product doest exists with that id',
+      });
+      return;
+    }
+    Cart.destroy({
+      where: {
+        userId,
+        productId,
+      },
+    });
+    res.status(200).json({
+      message: 'Product deleted Successfully',
+    });
+  }
+  async udateCart(req: Request, res: Response): Promise<void> {
+    const { productId } = req.params;
+    const userId = req.body;
+    const { quantity } = req.body;
+    const categoryData = await Cart.findOne({
+      where: {
+        userId,
+        productId,
+      },
+    });
+    categoryData.quantity = quantity;
+  }
 }
 export default new cartController();
