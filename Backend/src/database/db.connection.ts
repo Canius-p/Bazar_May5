@@ -38,6 +38,6 @@ Product.belongsTo(Category, { foreignKey: 'categoryId' });
 User.hasMany(Cart, { foreignKey: 'userId' });
 Cart.belongsTo(User, { foreignKey: 'userId' });
 
-Product.hasMany(Cart, { foreignKey: 'prductId' });
-Cart.belongsTo(Product, { foreignKey: 'prductId' });
+Product.hasMany(Cart, { foreignKey: 'productId' });
+Cart.belongsTo(Product, { foreignKey: 'productId' });
 export default sequelize;
