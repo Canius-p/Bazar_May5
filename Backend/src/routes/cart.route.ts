@@ -9,4 +9,8 @@ router
   .post(authMiddleware.isAuthencated, errorHandler(cartController.addToCart))
   .get(authMiddleware.isAuthencated, errorHandler(cartController.getCart));
 
+router
+  .route('/cart/:productId')
+  .patch(authMiddleware.isAuthencated, errorHandler(cartController.updateCart))
+  .delete(authMiddleware.isAuthencated, cartController.deleteCart);
 export default router;

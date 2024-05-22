@@ -3,7 +3,15 @@ import { authRequest } from '../middleware/auth.middleware';
 import Cart from '../database/models/cart.model';
 import { Certificate } from 'crypto';
 import Product from '../database/models/product.model';
+import Category from '../database/models/category.model';
 
+interface newCart {
+  productId: string | null;
+  quantity: number | null;
+  createdAt: string | null;
+  updatedAt: string | null;
+  userId: string | null;
+}
 class cartController {
   async addToCart(req: authRequest, res: Response): Promise<void> {
     const userId = req.user?.id;
@@ -46,8 +54,8 @@ class cartController {
           model: Product,
           include: [
             {
-              model: Product,
-              attributes: ['id', 'catagotyName'],
+              model: Category,
+              attributes: ['id', 'categoryName'],
             },
           ],
         },
@@ -85,17 +93,34 @@ class cartController {
       message: 'Product deleted Successfully',
     });
   }
-  async udateCart(req: Request, res: Response): Promise<void> {
+  async updateCart(req: authRequest, res: Response): Promise<void> {
     const { productId } = req.params;
-    const userId = req.body;
+    const userId = req.user?.id;
     const { quantity } = req.body;
-    const categoryData = await Cart.findOne({
+    if (!quantity) {
+      res.status(400).json({
+        message: 'Please provide quantitiy',
+      });
+      return;
+    }
+    const cartData = await Cart.findOne({
       where: {
         userId,
         productId,
       },
     });
-    categoryData.quantity = quantity;
+    if (cartData) {
+      cartData.quantity = quantity;
+      await cartData?.save();
+      res.status(200).json({
+        message: 'data updated',
+        data: cartData,
+      });
+    } else {
+      res.status(404).json({
+        message: 'Product doest exists with that Userid',
+      });
+    }
   }
 }
 export default new cartController();

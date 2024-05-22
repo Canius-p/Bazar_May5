@@ -21,7 +21,7 @@ class categoryController {
       const data = Category.bulkCreate(this.categoryData);
       console.log('Categories seeded Successfully');
     } else {
-      console.log('Cateforise already seeded');
+      console.log('Categories already seeded');
     }
   }
 
