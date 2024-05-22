@@ -1,4 +1,10 @@
-import { Table, Column, Model, DataType } from 'sequelize-typescript';
+import {
+  Table,
+  Column,
+  Model,
+  DataType,
+  AllowNull,
+} from 'sequelize-typescript';
 
 @Table({
   tableName: 'payment',
@@ -13,7 +19,7 @@ class Payment extends Model {
   })
   declare id: string;
   @Column({
-    type: DataType.ENUM('COD', 'ONLINE'),
+    type: DataType.ENUM('COD', 'Khalti', 'Esewa'),
   })
   declare paymentMethod: string;
 
