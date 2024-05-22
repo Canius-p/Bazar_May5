@@ -29,7 +29,7 @@ class Payment extends Model {
   declare paymentStatus: string;
 
   @Column({
-    type: DataType.NUMBER,
+    type: DataType.INTEGER,
   })
   declare quantity: number;
 }

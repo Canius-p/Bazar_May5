@@ -13,7 +13,7 @@ class OrderDetails extends Model {
   })
   declare id: string;
   @Column({
-    type: DataType.NUMBER,
+    type: DataType.INTEGER,
   })
   declare quantity: number;
 }
