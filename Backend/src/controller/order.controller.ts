@@ -4,6 +4,7 @@ import Order from '../database/models/order.model';
 import { authRequest } from '../middleware/auth.middleware';
 import Payment from '../database/models/payment.model';
 import OrderDetails from '../database/models/orderdetails.model';
+import axios from 'axios';
 const Items = [
   {
     quantity: 2,
@@ -53,11 +54,25 @@ class orderContoller {
     for (var i = 0; i < items.length; i++) {
       await OrderDetails.create({
         quantity: items[i].quantity,
-        productId: items[0].quantity,
+        productId: items[i].quantity,
         orderId: orderData.id,
       });
     }
     if (paymentDetails.paymentMethod === paymentMethod.Khalti) {
+      //khalti Integration
+      const data = {
+        return_url: process.env.BACKEND_URL,
+        purchese_order_id: orderData.id,
+        amount: totalAmount * 100,
+        website_url: process.env.BACKEND_URL,
+        purchase_order_id: orderData.id,
+      };
+      axios.post('https://a.khalti.com/api/v2/epayment/initiate/', data, {
+        headers: {
+          Authorization: 'key fd3fb444e174458181e30c5a31f04060',
+          'Content-Type': 'application/json',
+        },
+      });
     } else {
       res.status(200).json({
         message: 'Order Placed Successfully',
@@ -65,3 +80,4 @@ class orderContoller {
     }
   }
 }
+export default new orderContoller();
