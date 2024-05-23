@@ -17,13 +17,13 @@ export interface orderDetails {
   productId: string;
 }
 
-enum paymentMethod {
+export enum paymentMethod {
   COD = 'COD',
   Khalti = 'Khalti',
   Esewa = 'Esewa',
 }
 
-enum paymentStatus {
+export enum paymentStatus {
   Paid = 'Paid',
   Unpaid = 'Unpaid',
 }
