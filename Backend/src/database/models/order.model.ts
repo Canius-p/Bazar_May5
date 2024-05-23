@@ -22,18 +22,27 @@ class Order extends Model {
 
   @Column({
     type: DataType.INTEGER,
+    allowNull: false,
   })
   declare phoneNumber: number;
 
   @Column({
     type: DataType.STRING,
+    allowNull: false,
   })
   declare shippingAddre: string;
 
   @Column({
-    type: DataType.FLOAT,
+    type: DataType.STRING,
+    allowNull: false,
+    validate: {
+      len: {
+        args: [10, 10],
+        msg: 'Phone number should be 10 digits',
+      },
+    },
   })
-  declare totalAmount: number;
+  declare totalAmount: string;
 
   @Column({
     type: DataType.ENUM(

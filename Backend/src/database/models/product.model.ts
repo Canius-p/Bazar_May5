@@ -15,6 +15,7 @@ class Product extends Model {
 
   @Column({
     type: DataType.STRING,
+    allowNull: false,
   })
   declare productName: string;
 
@@ -25,6 +26,7 @@ class Product extends Model {
 
   @Column({
     type: DataType.INTEGER,
+    allowNull: false,
   })
   declare productPrice: number;
 

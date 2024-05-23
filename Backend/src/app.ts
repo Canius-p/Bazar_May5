@@ -28,7 +28,7 @@ app.use('/api', userRoute);
 app.use('/api/admin/product', productRoute);
 app.use('/api', categoryRoute);
 app.use('/api/user', cartRoute);
-app.use('/api', orderRoute);
+app.use('/api/user/order', orderRoute);
 app.listen(PORT, () => {
   categoryController.seedCategory();
   console.log(`Sever is running on http://${HOSTNAME}:${PORT}`);
